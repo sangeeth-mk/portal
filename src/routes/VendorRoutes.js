@@ -11,13 +11,13 @@ import Auth from 'utils/auth';
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/dashboard/Default/index')));
 
-const Customers = Loadable(lazy(() => import('module/vendor/views/Customers/index')));
+const Customers = Loadable(lazy(() => import('module/vendor/views/Tasks/index')));
 const Orders = Loadable(lazy(() => import('module/vendor/views/Orders/index')));
 const MyTeam = Loadable(lazy(() => import('module/vendor/views/MyTeam/index')));
 const Support = Loadable(lazy(() => import('module/vendor/views/Support/index')));
  const Profile = Loadable(lazy(() => import('module/vendor/views/Profile/Profile'))); 
 const ResetPassword = Loadable(lazy(() => import('module/vendor/views/Profile/resetPassword/ResetPassword')));
-const Payments = Loadable(lazy(() => import('module/vendor/views/Payments/index')));
+const Activity = Loadable(lazy(() => import('module/vendor/views/Activity/index')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const VendorRoutes = {
@@ -94,11 +94,11 @@ const VendorRoutes = {
       ]
     },
     {
-      path: 'Payments',
+      path: 'activity',
       children: [
         {
           path: '',
-          element: <Payments />
+          element: <Activity />
         }
       ]
     },

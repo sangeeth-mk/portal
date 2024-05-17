@@ -19,6 +19,7 @@ import { getEnqSource } from 'module/admin/container/enqSourceContainer/slice';
 import { getState } from 'module/admin/container/stateContainer/slice';
 import { getEnqMode } from 'module/admin/container/enqModeContainer/slice';
 import { getDistrict } from 'module/admin/container/districtContainer/slice';
+import styled from '@emotion/styled';
 
 const AddEditModal = ({ formtype, data, handleClose }) => {
   const theme = useTheme();
@@ -32,6 +33,10 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
   // const enqModDetails = useSelector((state) => state.adminReducer.enqmode.enqModeData);
   const district = useSelector((state) => state.adminReducer.district.districtData);
 
+  const Input = styled('input')({
+    display: 'none',
+  })
+
   console.log("===customerByIdData=====", customerByIdData);
 
   useEffect(() => {
@@ -41,6 +46,7 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
     dispatch(getEnqMode());
     dispatch(getDistrict());
   }, [dispatch]);
+
 
   useEffect(() => {
     if (data && data.id && formtype === 'editform') {
@@ -54,26 +60,30 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
 
   const [initialValues, setInitialValues] = useState({
     custType: 'individual',
-    fName: '',
-    lName: '',
-    email: '',
-    contactMobile1: '',
-    contactMobile2: '',
-    address: {
-      country: indiaCountryId,
-      state: keralaStateId,
-      district: kozhikodeDistrictId,
-      city: '',
-      addr1: '',
-      addr2: '',
-      postalCode: ''
-    },
-    enqMode: '',
-    enqSource: '',
-    gstin: '',
-    licenceNo: '',
-    remarks: '',
-    extRefNo: ''
+    // TaskType: '',
+    TaskCategory: '',
+    TaskPriority: '',
+    AssignedTo: '',
+    StartDate: '',
+    EndDate:'',
+    Title:'',
+    desc:'',
+    
+    // address: {
+    //   country: indiaCountryId,
+    //   state: keralaStateId,
+    //   district: kozhikodeDistrictId,
+    //   city: '',
+    //   addr1: '',
+    //   addr2: '',
+    //   postalCode: ''
+    // },
+    // enqMode: '',
+    // enqSource: '',
+    // gstin: '',
+    // licenceNo: '',
+    // remarks: '',
+    // extRefNo: ''
   });
 
   useEffect(() => {
@@ -115,6 +125,7 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
   });
 
   const onSubmit = async (values, { resetForm }) => {
+    
     try {
       if (formtype && formtype === 'addform') {
         await dispatch(addCustomer(values));
@@ -152,9 +163,9 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
             <TabPanel value={currentTab} index={0}>
               {/* Basic Details Tab */}
               <Grid container spacing={2}>
-                <Grid item md={4}>
+                <Grid item md={3}>
                   <FormLabel>
-                    Task Type
+                    Type
                   </FormLabel>
                   <Select
                     name="custType"
@@ -174,26 +185,25 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                     displayEmpty
                   >
                     <MenuItem value="individual" disabled>
-                      Select Task Type
+                      Select  Type
                     </MenuItem>
-                    {/* <MenuItem value="organization">Organization</MenuItem>
-                    <MenuItem value="individual">Individual</MenuItem>
-                    <MenuItem value="Agent">Agent</MenuItem> */}
+                    <MenuItem value="organization">Organization</MenuItem>
+                    <MenuItem value="Agent">Agent</MenuItem>
                   </Select>
                   <ErrorMessage name="custType" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
 
-                <Grid item md={4}>
+                <Grid item md={3}>
                   <FormLabel>
-                    Task Category
+                    Category
                     {/* <span style={{ color: 'red' }}>*</span> */}
                   </FormLabel>
                   <Select
-                    name="custType"
-                    id="custType"
+                  name="TaskCategory"
+                  id="TaskCategory"
                     value={values.custType}
                     onChange={(e) => {
-                      setFieldValue('custType', e.target.value);
+                      setFieldValue('TaskType', e.target.value);
                     }}
                     variant="outlined"
                     fullWidth
@@ -206,31 +216,24 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                     displayEmpty
                   >
                     <MenuItem value="individual" disabled>
-                      Select Task Category
+                      Select Category
                     </MenuItem>
-                    {/* <MenuItem value="organization">Organization</MenuItem> */}
-                    {/* <MenuItem value="individual" >Select Task Category</MenuItem> */}
-                    {/* <MenuItem value="Agent">Agent</MenuItem> */}
+                    <MenuItem value="organization">Organization</MenuItem>
+                    <MenuItem value="Agent">Agent</MenuItem>
                   </Select>
                   <ErrorMessage name="custType" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
-
-                <Grid item md={4}>
-                  <FormLabel>Task Title</FormLabel>
-                  <Textfield name="lName" id="lName" placeholder="Task Title" component={Textfield} />
-                  <ErrorMessage name="lName" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
-                </Grid>
-
-                <Grid item md={4}>
+                
+                <Grid item md={3}>
                   <FormLabel>
-                    Task Priority
+                    Priority
                   </FormLabel>
                   <Select
-                    name="custType"
-                    id="custType"
+                      name="TaskPriority"
+                      id="TaskPriority"
                     value={values.custType}
                     onChange={(e) => {
-                      setFieldValue('custType', e.target.value);
+                      setFieldValue('TaskCategory', e.target.value);
                     }}
                     variant="outlined"
                     fullWidth
@@ -243,43 +246,24 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                     displayEmpty
                   >
                     <MenuItem value="individual" disabled>
-                      Select Task Priority
+                      Select  Priority
                     </MenuItem>
-                    {/* <MenuItem value="organization">Organization</MenuItem>
-                    <MenuItem value="individual">Individual</MenuItem>
-                    <MenuItem value="Agent">Agent</MenuItem> */}
+                    <MenuItem value="organization">Organization</MenuItem>
+                    <MenuItem value="Agent">Agent</MenuItem>
                   </Select>
                   <ErrorMessage name="custType" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
-
-                <Grid item md={4}>
-                  <FormLabel>Start Date</FormLabel>
-                  <Textfield name="email" id="email" type='date' component={Textfield} />
-                  <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
-                </Grid>
-
-                <Grid item md={4}>
-                  <FormLabel>End Date</FormLabel>
-                  <Textfield name="email" id="email" type='date' component={Textfield} />
-                  <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
-                </Grid>
-
-                <Grid item md={4}>
-                  <FormLabel>Image Uploads</FormLabel>
-                  <Textfield  name="email"  type='file' component={Textfield} />
-                  <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
-                </Grid>
-
-                <Grid item md={4}>
+                
+                <Grid item md={3}>
                   <FormLabel>
                     Assigned To
                   </FormLabel>
                   <Select
-                    name="custType"
-                    id="custType"
+                    name="AssignedTo"
+                    id="AssignedTo"
                     value={values.custType}
                     onChange={(e) => {
-                      setFieldValue('custType', e.target.value);
+                      setFieldValue('AssignedTo', e.target.value);
                     }}
                     variant="outlined"
                     fullWidth
@@ -295,20 +279,83 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                     <MenuItem value="individual" disabled>
                       Assigned To
                     </MenuItem>
-                    {/* <MenuItem value="organization">Organization</MenuItem>
-                    <MenuItem value="individual">Individual</MenuItem>
-                    <MenuItem value="Agent">Agent</MenuItem> */}
+                    <MenuItem value="organization">Organization</MenuItem>
+                    <MenuItem value="Agent">Agent</MenuItem>
                   </Select>
                   <ErrorMessage name="custType" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
 
-                <Grid item xs={12} md={4}>
+                <Grid item md={5}>
+
+                  <FormLabel>Start Date</FormLabel>
+                  <Textfield name="StartDate" id="StartDate" type='date' component={Textfield} onChange={(e) => {
+                      setFieldValue('StartDate', e.target.value);
+                    }}/>
+                  <ErrorMessage name="StartDate" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
+
+                  <FormLabel>End Date</FormLabel>
+                  <Textfield name="EndDate" id="EndDate" type='date' component={Textfield} onChange={(e) => {
+                      setFieldValue('StartDate', e.target.value);
+                    }}/>
+                  <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
+
+                  <FormLabel>Upload Image</FormLabel>
+                  <label htmlFor="upload-button">
+                    <Input
+                      accept="*"
+                      id="upload-button"
+                      type="file"
+                      name="taskRef"
+                      // onChange={handleChange}
+                      // onBlur={handleBlur}
+                      // value={values.taskRef}
+                    />
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      fullWidth
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '12px 16px',
+                        borderColor: 'rgba(0, 0, 0, 0.23)',
+                        borderRadius: '4px',
+                      }}
+                    >
+                      <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                        <svg
+                          style={{ marginRight: 8 }}
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M5 17h14v2H5v-2zm7-12l5 5h-4v6h-2v-6H7l5-5z"
+                            fill="currentColor"
+                          />
+                        </svg>
+                        Add Attachments
+                      </span>
+                    </Button>
+                  </label>
+
+                </Grid>
+
+                <Grid item xs={12} md={7}>
+
+                <FormLabel>Title</FormLabel>
+                  <Textfield name="Title" id="Title" placeholder="Task Title" component={Textfield} />
+                  <ErrorMessage name="Title" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
+
                   <FormLabel>Description</FormLabel>
 
                   <Textfield
                     multiline
-                    minRows={4}
-                    maxRows={6}
+                    minRows={5.5}
+                    maxRows={5}
 
                     aria-label="maximum height"
                     name="desc"
@@ -318,6 +365,8 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                   />
                   <ErrorMessage name="desc" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
+
+
                 <Grid item xs={12} sm={6}></Grid>
               </Grid>
             </TabPanel>
@@ -352,7 +401,7 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                   <ErrorMessage name="address.country" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid> */}
                 <Grid item md={4}>
-                  <FormLabel>Client Name</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <Textfield name="email" id="email" placeholder='Client Name' component={Textfield} />
                   <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
@@ -386,7 +435,7 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                   <ErrorMessage name="address.state" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid> */}
                 <Grid item md={4}>
-                  <FormLabel>Client Location</FormLabel>
+                  <FormLabel>Location</FormLabel>
                   <Textfield name="email" id="email" placeholder='Client Location' component={Textfield} />
                   <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
@@ -418,19 +467,19 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                   <ErrorMessage name="address.district" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid> */}
                 <Grid item md={4}>
-                  <FormLabel>Client Mobile</FormLabel>
+                  <FormLabel>Mobile</FormLabel>
                   <Textfield name="email" id="email" placeholder='Client Mobile' component={Textfield} />
                   <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
 
                 <Grid item md={4}>
-                  <FormLabel>Client Email</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <Textfield name="email" id="email" placeholder='Client Email' component={Textfield} />
                   <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
 
                 <Grid item md={4}>
-                  <FormLabel>Client Website</FormLabel>
+                  <FormLabel>Website</FormLabel>
                   <Textfield name="email" id="email" placeholder='Client Website' component={Textfield} />
                   <ErrorMessage name="email" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>
@@ -476,9 +525,8 @@ const AddEditModal = ({ formtype, data, handleClose }) => {
                     <MenuItem value="individual" disabled>
                       Spoc Designation
                     </MenuItem>
-                    {/* <MenuItem value="organization">Organization</MenuItem>
-                    <MenuItem value="individual">Individual</MenuItem>
-                    <MenuItem value="Agent">Agent</MenuItem> */}
+                    <MenuItem value="organization">Organization</MenuItem>
+                    <MenuItem value="Agent">Agent</MenuItem>
                   </Select>
                   <ErrorMessage name="custType" component="div" style={{ color: '#f54d4f', fontSize: 12 }} />
                 </Grid>

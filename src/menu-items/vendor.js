@@ -30,7 +30,7 @@ const vendor = {
       id: 'activity',
       title: 'Activity',
       type: 'item',
-      url: '/customers',
+      url: '/activity',
       icon: icons.IconAnalyze,
       breadcrumbs: false
     },
